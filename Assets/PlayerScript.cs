@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] public List<Inventory> inventoryList;
-    public ItemObject sword, scimitar;
+    public ItemObject sword, axe, shield;
     public GameObject inventoryPanel;
     public GameObject slotPrefab;
 
@@ -23,10 +23,13 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         inventoryList = new List<Inventory>();
+
+        //Initialize two inventories and add items
         CreateInventory(inventoryList.Count, 20);
-        CreateInventory(inventoryList.Count, 15);
+        CreateInventory(inventoryList.Count, 20);
         inventoryList[0].AddItem(sword);
-        inventoryList[0].AddItem(scimitar);
+        inventoryList[0].AddItem(axe);
+        inventoryList[0].AddItem(shield);
         DrawInventory(inventoryList[0]);
         mousePointerSprite = mousePointer.GetComponent<Image>().sprite;
         mousePointerTransform = mousePointer.GetComponent<RectTransform>();
@@ -51,7 +54,7 @@ public class PlayerScript : MonoBehaviour
     {
         GameObject instantiatedPanel = Instantiate(inventoryPanel);
         instantiatedPanel.transform.SetParent(GameObject.Find("Canvas").transform);
-        instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-10 - (inventoryList.Count * -330), -330);
+        instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-10* inventoryList.Count - (inventoryList.Count * -330), -330);
         Inventory inventory = new Inventory(inventoryID, slotCount);
         inventoryList.Add(inventory);
         List<GameObject> slotGameObjects = new List<GameObject>();
