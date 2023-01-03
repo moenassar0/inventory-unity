@@ -16,9 +16,13 @@ public class PlayerScript : MonoBehaviour
     public ItemObject draggedItem = null;
     public int draggedFromSlotID;
     public int draggedFromInventoryID;
+    public int draggedStack;
     public GameObject mousePointer;
     public Sprite mousePointerSprite;
     public RectTransform mousePointerTransform;
+
+    //testing
+    public Slot draggedSlot;
 
     void Start()
     {
@@ -27,9 +31,9 @@ public class PlayerScript : MonoBehaviour
         //Initialize two inventories and add items
         CreateInventory(inventoryList.Count, 20);
         CreateInventory(inventoryList.Count, 20);
-        inventoryList[0].AddItem(sword);
-        inventoryList[0].AddItem(axe);
-        inventoryList[0].AddItem(shield);
+        inventoryList[0].AddItem(sword, 1);
+        inventoryList[0].AddItem(axe, 2);
+        inventoryList[0].AddItem(shield, 1);
         DrawInventory(inventoryList[0]);
         mousePointerSprite = mousePointer.GetComponent<Image>().sprite;
         mousePointerTransform = mousePointer.GetComponent<RectTransform>();
@@ -76,13 +80,16 @@ public class PlayerScript : MonoBehaviour
         for (int i = 0; i < inventory.slotCount; i++)
         {
             Image slotImage = inventory.slotGameObjects[i].transform.GetChild(0).GetComponent<Image>();
+            Text stackImage = inventory.slotGameObjects[i].transform.GetChild(1).GetComponent<Text>();
             if (inventory.slots[i].item != null)
             {
                 slotImage.sprite = inventory.slots[i].item.itemIcon;
+                stackImage.text = inventory.slots[i].currentStack.ToString();
             }
             else
             {
                 slotImage.sprite = null;
+                stackImage.text = "";
             }
         }
     }
@@ -101,6 +108,7 @@ public class PlayerScript : MonoBehaviour
                 slot.item = null;
                 draggedFromSlotID = slotID;
                 draggedFromInventoryID = inventoryID;
+                draggedStack = inventoryList[inventoryID].slots[slotID].currentStack;
                 DrawInventory(inventory);
             }
         }
@@ -109,6 +117,7 @@ public class PlayerScript : MonoBehaviour
             if(slot.item == null)
             {
                 slot.item = draggedItem;
+                slot.currentStack = draggedStack;
                 //inventory.slotGameObjects[slotID].GetComponent<SlotLogic>().inventoryID = draggedFromInventoryID;
                 draggedItem = null;
                 draggingItem = false;
@@ -117,17 +126,36 @@ public class PlayerScript : MonoBehaviour
             else
             {
                 ItemObject tempItem = slot.item;
+                int tempSlot = slot.currentStack;
                 Slot draggedFromSlot = inventoryList[draggedFromInventoryID].slots[draggedFromSlotID];
-                Debug.Log("Dragged from: " + draggedFromInventoryID + "Clicked on: " + draggedFromSlotID);
-                //Debug.Log("Dragged from: " + draggedFromSlot.item + "Clicked on: " + slot.item);
                 slot.item = draggedItem;
+                slot.currentStack = draggedStack;
                 draggedFromSlot.item = tempItem;
+                draggedFromSlot.currentStack = tempSlot;
 
 
                 draggedItem = null;
                 draggingItem = false;
                 DrawInventory(inventory);
                 DrawInventory(inventoryList[draggedFromInventoryID]);
+            }
+        }
+    }
+    public void RightClickedOnSlot(int slotID, int inventoryID)
+    {
+        if(inventoryList[inventoryID].slots[slotID].item != null)
+        {
+            //split stack
+            ItemObject thisItem = inventoryList[inventoryID].slots[slotID].item;
+            if(inventoryList[inventoryID].slots[slotID].currentStack > 1)
+            {
+                int minusAmount = inventoryList[inventoryID].slots[slotID].currentStack / 2;
+                inventoryList[inventoryID].slots[slotID].currentStack -= minusAmount;
+                draggedItem = thisItem;
+                draggingItem = true;
+                draggedFromSlotID = slotID;
+                draggedFromInventoryID = inventoryID;
+                draggedStack = minusAmount;
             }
         }
     }

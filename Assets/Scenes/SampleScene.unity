@@ -417,16 +417,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryList: []
   sword: {fileID: 11400000, guid: 8406c30c10f2ec149b2dc22e895fa76f, type: 2}
-  scimitar: {fileID: 11400000, guid: 60a7fd938548a43468afcf50f0f4db89, type: 2}
+  axe: {fileID: 11400000, guid: 8c9707565ea011f4582f496f8632a7b4, type: 2}
+  shield: {fileID: 11400000, guid: 3860cf49ca2467a4691bb0038dfa323d, type: 2}
   inventoryPanel: {fileID: 8247185921292254472, guid: 0924ccf4f88514c41a95100cb81aa32a, type: 3}
-  slotPrefab: {fileID: 8172880817768003599, guid: b110a8fb21e98f24c876319dd346611d, type: 3}
+  slotPrefab: {fileID: 4382948948288691243, guid: 954b2ccab7043284ea50a72e29337603, type: 3}
   draggingItem: 0
   draggedItem: {fileID: 0}
   draggedFromSlotID: 0
   draggedFromInventoryID: 0
+  draggedStack: 0
   mousePointer: {fileID: 2133134004}
   mousePointerSprite: {fileID: 0}
   mousePointerTransform: {fileID: 0}
+  draggedSlot:
+    SlotID: 0
+    item: {fileID: 0}
+    currentStack: 0
 --- !u!1 &1087405887
 GameObject:
   m_ObjectHideFlags: 0

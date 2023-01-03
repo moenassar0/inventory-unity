@@ -26,13 +26,14 @@ public class Inventory
         this.slotGameObjects = slotGameObjects;
     }
 
-    public void AddItem(ItemObject item)
+    public void AddItem(ItemObject item, int stack)
     {
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].item == null)
             {
                 slots[i].item = item;
+                slots[i].currentStack = stack;
                 break;
             }
         }

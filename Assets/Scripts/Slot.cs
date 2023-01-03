@@ -7,10 +7,12 @@ public class Slot
 {
     public int SlotID;
     public ItemObject item;
+    public int currentStack;
 
-    public Slot(int slotID, ItemObject item = null)
+    public Slot(int slotID, ItemObject item = null, int currentStack = 0)
     {
         this.SlotID = slotID;
         this.item = item;
+        this.currentStack = currentStack;
     }
 }

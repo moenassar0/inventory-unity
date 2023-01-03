@@ -25,6 +25,10 @@ public class SlotLogic : MonoBehaviour, IPointerClickHandler
             thisInventory.AddItem(playerScript.sword);
             playerScript.DrawInventory(thisInventory);
         }*/
-        playerScript.ClickedOnSlot(slotID, inventoryID);
+
+        if (eventData.pointerId == -2)
+            playerScript.RightClickedOnSlot(slotID, inventoryID);
+        else
+            playerScript.ClickedOnSlot(slotID, inventoryID);
     }
 }
