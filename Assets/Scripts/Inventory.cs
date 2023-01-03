@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +34,14 @@ public class Inventory
             if (slots[i].item == null)
             {
                 slots[i].item = item;
-                slots[i].currentStack = stack;
+                if(stack > item.maxStackSize)
+                {
+                    int newStack = stack - item.maxStackSize;
+                    slots[i].currentStack = item.maxStackSize;
+                    AddItem(item, newStack);
+                }
+                else
+                    slots[i].currentStack = stack;
                 break;
             }
         }

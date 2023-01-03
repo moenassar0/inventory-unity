@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
         CreateInventory(inventoryList.Count, 20);
         CreateInventory(inventoryList.Count, 20);
         inventoryList[0].AddItem(sword, 1);
-        inventoryList[0].AddItem(axe, 2);
+        inventoryList[0].AddItem(axe, 11);
         inventoryList[0].AddItem(shield, 1);
         DrawInventory(inventoryList[0]);
         mousePointerSprite = mousePointer.GetComponent<Image>().sprite;
@@ -124,6 +124,18 @@ public class PlayerScript : MonoBehaviour
                 draggingItem = false;
                 DrawInventory(inventory);
             }
+            else if (slot.item.itemID == draggedItem.item.itemID && (slot.item.maxStackSize >= slot.currentStack + draggedItem.currentStack))
+            {
+                
+                
+                    //combine the stacks into slot
+                    slot.currentStack += draggedItem.currentStack;
+                    draggedItem = new DraggedItem();
+                    draggingItem = false;
+                    DrawInventory(inventory);
+                    DrawInventory(inventoryList[draggedItem.inventoryID]);
+                
+            }
             else
             {
                 ItemObject tempItem = slot.item;
@@ -134,7 +146,7 @@ public class PlayerScript : MonoBehaviour
                 draggedFromSlot.item = tempItem;
                 draggedFromSlot.currentStack = tempSlot;
 
-
+                //Reset
                 draggedItem = new DraggedItem();
                 draggingItem = false;
                 DrawInventory(inventory);
