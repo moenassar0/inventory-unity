@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class PlayerScript : MonoBehaviour
         for (int i = 0; i < inventory.slotCount; i++)
         {
             Image slotImage = inventory.slotGameObjects[i].transform.GetChild(0).GetComponent<Image>();
-            Text stackImage = inventory.slotGameObjects[i].transform.GetChild(1).GetComponent<Text>();
+            TextMeshProUGUI stackImage = inventory.slotGameObjects[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             if (inventory.slots[i].item != null)
             {
                 slotImage.sprite = inventory.slots[i].item.itemIcon;

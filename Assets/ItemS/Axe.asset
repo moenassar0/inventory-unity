@@ -16,3 +16,4 @@ MonoBehaviour:
   itemDescription: Axe
   itemName: Axe
   itemIcon: {fileID: 21300000, guid: 44708ce7e4902ab4181358c0a1d156e4, type: 3}
+  maxStackSize: 5
