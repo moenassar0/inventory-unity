@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
 {
     [SerializeField] public List<Inventory> inventoryList;
     public ItemObject sword, axe, shield;
-    public GameObject inventoryPanel;
+    public GameObject inventoryPanel, craftingPanel;
     public GameObject slotPrefab;
 
     //Dragging item logic variables
@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject mousePointer;
     public Sprite mousePointerSprite;
     public RectTransform mousePointerTransform;
+    public Inventory craftingInventory;
 
     //testing
     public DraggedItem draggedItem;
@@ -31,13 +32,14 @@ public class PlayerScript : MonoBehaviour
         draggedItem = new DraggedItem();
         //Initialize two inventories and add items
         CreateInventory(inventoryList.Count, 20);
-        CreateInventory(inventoryList.Count, 20);
+        //CreateInventory(inventoryList.Count, 20);
         inventoryList[0].AddItem(sword, 1);
         inventoryList[0].AddItem(axe, 11);
         inventoryList[0].AddItem(shield, 1);
         DrawInventory(inventoryList[0]);
         mousePointerSprite = mousePointer.GetComponent<Image>().sprite;
         mousePointerTransform = mousePointer.GetComponent<RectTransform>();
+        CreateCraftingTable(inventoryList.Count);
         mousePointer.GetComponent<RectTransform>().SetAsLastSibling();
     }
 
@@ -71,6 +73,32 @@ public class PlayerScript : MonoBehaviour
             slotLogic.slotID = i;
             slotLogic.inventoryID = inventoryID;
             instantiatedSlot.transform.SetParent(instantiatedPanel.transform);
+            slotGameObjects.Add(instantiatedSlot);
+        }
+        inventory.setSlotGameObjects(slotGameObjects);
+    }
+
+    void CreateCraftingTable(int inventoryID)
+    {
+        GameObject instantiatedPanel = Instantiate(craftingPanel);
+        instantiatedPanel.transform.SetParent(GameObject.Find("Canvas").transform);
+        instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        GameObject slotPanel = instantiatedPanel.transform.GetChild(0).gameObject;
+        Inventory inventory = new Inventory(inventoryID, 10);
+        inventoryList.Add(inventory);
+        List<GameObject> slotGameObjects = new List<GameObject>();
+        for (int i = 0; i < 10; i++)
+        {
+            //inventory.slots.Add(new Slot(i, new ItemObject()));
+            GameObject instantiatedSlot = Instantiate(slotPrefab);
+            instantiatedSlot.AddComponent<CraftingSlot>();
+            SlotLogic slotLogic = instantiatedSlot.GetComponent<SlotLogic>();
+            slotLogic.slotID = i;
+            slotLogic.inventoryID = inventoryID;
+            if(i == 9)
+                instantiatedSlot.transform.SetParent(instantiatedPanel.transform.GetChild(1));
+            else
+                instantiatedSlot.transform.SetParent(slotPanel.transform);
             slotGameObjects.Add(instantiatedSlot);
         }
         inventory.setSlotGameObjects(slotGameObjects);
@@ -127,15 +155,12 @@ public class PlayerScript : MonoBehaviour
             }
             else if (slot.item.itemID == draggedItem.item.itemID && (slot.item.maxStackSize >= slot.currentStack + draggedItem.currentStack))
             {
-                
-                
-                    //combine the stacks into slot
-                    slot.currentStack += draggedItem.currentStack;
-                    draggedItem = new DraggedItem();
-                    draggingItem = false;
-                    DrawInventory(inventory);
-                    DrawInventory(inventoryList[draggedItem.inventoryID]);
-                
+                //combine the stacks into slot
+                slot.currentStack += draggedItem.currentStack;
+                draggedItem = new DraggedItem();
+                draggingItem = false;
+                DrawInventory(inventory);
+                DrawInventory(inventoryList[draggedItem.inventoryID]);
             }
             else
             {
