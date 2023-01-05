@@ -8,7 +8,7 @@ using TMPro;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] public List<Inventory> inventoryList;
-    public ItemObject sword, axe, shield;
+    public ItemObject sword, axe, shield, wood, stone;
     public GameObject inventoryPanel, craftingPanel;
     public GameObject slotPrefab;
 
@@ -36,6 +36,8 @@ public class PlayerScript : MonoBehaviour
         inventoryList[0].AddItem(sword, 1);
         inventoryList[0].AddItem(axe, 11);
         inventoryList[0].AddItem(shield, 1);
+        inventoryList[0].AddItem(wood, 64);
+        inventoryList[0].AddItem(stone, 64);
         DrawInventory(inventoryList[0]);
         mousePointerSprite = mousePointer.GetComponent<Image>().sprite;
         mousePointerTransform = mousePointer.GetComponent<RectTransform>();
@@ -91,7 +93,7 @@ public class PlayerScript : MonoBehaviour
         {
             //inventory.slots.Add(new Slot(i, new ItemObject()));
             GameObject instantiatedSlot = Instantiate(slotPrefab);
-            instantiatedSlot.AddComponent<CraftingSlot>();
+            //instantiatedSlot.AddComponent<CraftingSlot>();
             SlotLogic slotLogic = instantiatedSlot.GetComponent<SlotLogic>();
             slotLogic.slotID = i;
             slotLogic.inventoryID = inventoryID;
@@ -101,7 +103,7 @@ public class PlayerScript : MonoBehaviour
                 instantiatedSlot.transform.SetParent(slotPanel.transform);
             slotGameObjects.Add(instantiatedSlot);
         }
-        inventory.setSlotGameObjects(slotGameObjects);
+        inventory.setSlotGameObjects(slotGameObjects); craftingInventory = inventory;
     }
 
     public void DrawInventory(Inventory inventory)

@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -555,6 +556,8 @@ MonoBehaviour:
   sword: {fileID: 11400000, guid: 8406c30c10f2ec149b2dc22e895fa76f, type: 2}
   axe: {fileID: 11400000, guid: 8c9707565ea011f4582f496f8632a7b4, type: 2}
   shield: {fileID: 11400000, guid: 3860cf49ca2467a4691bb0038dfa323d, type: 2}
+  wood: {fileID: 11400000, guid: 93370a336d079e24b95eca3efab12082, type: 2}
+  stone: {fileID: 11400000, guid: 0c65dd6d5bdb5bd46ace630a93f10320, type: 2}
   inventoryPanel: {fileID: 8247185921292254472, guid: 0924ccf4f88514c41a95100cb81aa32a, type: 3}
   craftingPanel: {fileID: 5151960661699337138, guid: 5d7b27e689e943742afd7e9153767b55, type: 3}
   slotPrefab: {fileID: 4382948948288691243, guid: 954b2ccab7043284ea50a72e29337603, type: 3}
@@ -562,6 +565,30 @@ MonoBehaviour:
   mousePointer: {fileID: 2133134004}
   mousePointerSprite: {fileID: 0}
   mousePointerTransform: {fileID: 0}
+  craftingInventory:
+    inventoryID: 0
+    slotCount: 0
+    slots: []
+    slotGameObjects: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d180d9d676208f42a65fc8fd54899d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingInventory:
+    inventoryID: 0
+    slotCount: 0
+    slots: []
+    slotGameObjects: []
+  problem: 0
+  craftingRecipe: 000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &1014396466
 GameObject:
   m_ObjectHideFlags: 0
